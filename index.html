@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="id" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal Dzikir Najmushshaghir 2026</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#065f46">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="Sistem Informasi Jadwal Undangan Dzikir Najmushshaghir 2026">
+    
+    <!-- Fonts: Inter for UI, Amiri for Islamic feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Amiri', 'serif'],
+                    },
+                    colors: {
+                        islamic: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                            gold: '#d4af37'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom Scrollbar & Animations */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .slide-up { animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* Loader */
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top: 3px solid #fff;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 transition-colors duration-300 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="bg-islamic-900 text-white shadow-lg sticky top-0 z-40 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-mosque text-islamic-gold text-2xl"></i>
+                    <h1 class="font-serif font-bold text-lg sm:text-xl tracking-wide">Balai Pengajian Najmushshaghir</h1>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button id="themeToggle" class="p-2 rounded-full hover:bg-white/10 transition" title="Toggle Dark Mode">
+                        <i class="fa-solid fa-moon text-lg" id="themeIcon"></i>
+                    </button>
+                    <button id="authBtn" class="flex items-center gap-2 bg-islamic-700 hover:bg-islamic-800 px-4 py-2 rounded-lg text-sm font-medium transition border border-islamic-500/30">
+                        <i class="fa-solid fa-user-shield"></i> <span id="authBtnText">Admin Login</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        
+        <!-- Header Section -->
+        <div class="text-center mb-10 fade-in">
+            <h2 class="text-3xl sm:text-4xl font-serif font-bold text-islamic-900 dark:text-islamic-50 mb-2">Jadwal Undangan Meudike Najmushshaghir 2026</h2>
+            <p class="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">Sistem informasi manajemen kehadiran meudike. Semoga Allah SWT memudahkan setiap langkah dalam perjalanan.</p>
+        </div>
+
+        <!-- Dashboard Statistics -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 fade-in" style="animation-delay: 0.1s;">
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">Total Undangan</p>
+                    <p class="text-3xl font-bold text-gray-800 dark:text-white" id="statTotal">0</p>
+                </div>
+                <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-full flex items-center justify-center text-blue-600 dark:text-blue-400">
+                    <i class="fa-solid fa-calendar-days text-xl"></i>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">Telah Dihadiri</p>
+                    <p class="text-3xl font-bold text-islamic-600 dark:text-islamic-500" id="statCompleted">0</p>
+                </div>
+                <div class="w-12 h-12 bg-islamic-50 dark:bg-islamic-900/30 rounded-full flex items-center justify-center text-islamic-600 dark:text-islamic-500">
+                    <i class="fa-solid fa-circle-check text-xl"></i>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">Belum Dihadiri</p>
+                    <p class="text-3xl font-bold text-amber-600 dark:text-amber-500" id="statPending">0</p>
+                </div>
+                <div class="w-12 h-12 bg-amber-50 dark:bg-amber-900/30 rounded-full flex items-center justify-center text-amber-600 dark:text-amber-500">
+                    <i class="fa-solid fa-clock text-xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700 mb-8 fade-in" style="animation-delay: 0.2s;">
+            <div class="flex justify-between text-sm mb-2 font-medium">
+                <span class="text-gray-600 dark:text-gray-300">Progress Kehadiran Tahun Ini</span>
+                <span class="text-islamic-600 dark:text-islamic-400" id="progressText">0%</span>
+            </div>
+            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+                <div id="progressBar" class="bg-gradient-to-r from-islamic-500 to-islamic-700 h-3 rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Controls Toolbar -->
+        <div class="flex flex-col md:flex-row gap-4 justify-between items-center mb-6 fade-in" style="animation-delay: 0.3s;">
+            <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                <!-- Search -->
+                <div class="relative w-full sm:w-64">
+                    <i class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" id="searchInput" placeholder="Cari nama tempat..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-islamic-500 outline-none transition text-sm">
+                </div>
+                <!-- Month Filter -->
+                <select id="monthFilter" class="w-full sm:w-48 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-islamic-500 outline-none transition text-sm appearance-none cursor-pointer">
+                    <option value="all">Semua Bulan</option>
+                    <option value="01">Januari</option>
+                    <option value="02">Februari</option>
+                    <option value="03">Maret</option>
+                    <option value="04">April</option>
+                    <option value="05">Mei</option>
+                    <option value="06">Juni</option>
+                    <option value="07">Juli</option>
+                    <option value="08">Agustus</option>
+                    <option value="09">September</option>
+                    <option value="10">Oktober</option>
+                    <option value="11">November</option>
+                    <option value="12">Desember</option>
+                </select>
+            </div>
+            
+            <!-- Admin Actions (Hidden by default) -->
+            <div id="adminActions" class="hidden flex gap-2 w-full md:w-auto justify-end">
+                <button onclick="document.getElementById('fileInput').click()" class="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-xl text-sm font-medium transition flex items-center gap-2 text-gray-700 dark:text-gray-200">
+                    <i class="fa-solid fa-file-import"></i> <span class="hidden sm:inline">Import</span>
+                </button>
+                <input type="file" id="fileInput" accept=".csv" class="hidden">
+                
+                <button onclick="exportData()" class="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-xl text-sm font-medium transition flex items-center gap-2 text-gray-700 dark:text-gray-200">
+                    <i class="fa-solid fa-file-export"></i> <span class="hidden sm:inline">Export</span>
+                </button>
+                
+                <button onclick="openModal('addModal')" class="px-4 py-2.5 bg-islamic-600 hover:bg-islamic-700 text-white rounded-xl text-sm font-medium transition flex items-center gap-2 shadow-md shadow-islamic-600/40">
+                    <i class="fa-solid fa-plus"></i> Tambah Jadwal
+                </button>
+            </div>
+        </div>
+
+        <!-- List Container -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden fade-in" style="animation-delay: 0.4s;">
+            <!-- Initial Loading State -->
+            <div id="listLoading" class="p-12 flex flex-col items-center justify-center text-gray-400">
+                <i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3 text-islamic-500"></i>
+                <p>Memuat jadwal...</p>
+            </div>
+            
+            <!-- Empty State -->
+            <div id="listEmpty" class="hidden p-12 flex-col items-center justify-center text-gray-400">
+                <i class="fa-regular fa-calendar-xmark text-4xl mb-3 text-gray-300 dark:text-gray-600"></i>
+                <p>Tidak ada jadwal ditemukan.</p>
+            </div>
+
+            <!-- Data List -->
+            <ul id="scheduleList" class="divide-y divide-gray-100 dark:divide-gray-700 hidden">
+                <!-- Items injected via JS -->
+            </ul>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 mt-auto transition-colors">
+        <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+            <p>&copy; 2026 Majelis Dzikir Najmushshaghir.</p>
+            <p class="flex items-center gap-2">
+                Dikembangkan dengan <i class="fa-solid fa-heart text-red-500"></i> oleh <span class="font-medium text-islamic-700 dark:text-islamic-400">Muhammad Hafiz</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- MODALS -->
+    
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform duration-300 relative mx-4">
+            <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-islamic-100 dark:bg-islamic-900/50 rounded-full flex items-center justify-center mx-auto mb-3 text-islamic-600 dark:text-islamic-400 text-xl">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Admin Login</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Masuk untuk mengelola jadwal.</p>
+            </div>
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                    <input type="email" id="loginEmail" required class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 focus:ring-2 focus:ring-islamic-500 outline-none transition text-sm">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
+                    <input type="password" id="loginPassword" required class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 focus:ring-2 focus:ring-islamic-500 outline-none transition text-sm">
+                </div>
+                <button type="submit" id="submitLoginBtn" class="w-full py-2.5 bg-islamic-600 hover:bg-islamic-700 text-white rounded-xl font-bold transition flex items-center justify-center gap-2">
+                    <span>Masuk</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add/Edit Modal -->
+    <div id="addModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md p-6 shadow-2xl transform scale-95 transition-transform duration-300 relative mx-4">
+            <button onclick="closeModal('addModal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6" id="modalTitle">Tambah Jadwal Baru</h3>
+            
+            <form id="scheduleForm" class="space-y-4">
+                <input type="hidden" id="editId">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tanggal</label>
+                    <input type="date" id="inputDate" required class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 focus:ring-2 focus:ring-islamic-500 outline-none transition text-sm [color-scheme:light] dark:[color-scheme:dark]">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nama Tempat</label>
+                    <input type="text" id="inputPlace" required placeholder="Contoh: Gampong Aron Pirak" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 focus:ring-2 focus:ring-islamic-500 outline-none transition text-sm">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Keterangan Waktu</label>
+                    <input type="text" id="inputTime" required placeholder="Contoh: Selasa Pagi" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 focus:ring-2 focus:ring-islamic-500 outline-none transition text-sm">
+                </div>
+                <div class="flex items-center gap-2 mt-2">
+                    <input type="checkbox" id="inputStatus" class="w-4 h-4 text-islamic-600 rounded border-gray-300 focus:ring-islamic-500 accent-islamic-600">
+                    <label for="inputStatus" class="text-sm text-gray-700 dark:text-gray-300 cursor-pointer">Tandai sudah dihadiri</label>
+                </div>
+                
+                <div class="pt-4 flex gap-3 justify-end">
+                    <button type="button" onclick="closeModal('addModal')" class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-xl transition">Batal</button>
+                    <button type="submit" id="saveBtn" class="px-4 py-2 text-sm font-medium text-white bg-islamic-600 hover:bg-islamic-700 rounded-xl transition flex items-center gap-2">
+                        Simpan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Confirm Delete Modal -->
+    <div id="deleteModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform duration-300 mx-4 text-center">
+            <div class="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4 text-red-600 dark:text-red-400 text-2xl">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Hapus Jadwal?</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Data yang dihapus tidak dapat dikembalikan lagi. Yakin ingin melanjutkan?</p>
+                <button onclick="openModal('addModal')" class="px-4 py-2.5 bg-islamic-600 hover:bg-islamic-700 text-white rounded-xl text-sm font-medium transition flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i> Tambah Jadwal
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="fixed bottom-4 right-4 z-[60] flex flex-col gap-2"></div>
+
+    <!-- Application Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Firebase Configuration (Provided by user)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBocf8HfjKRYZEGDel9MQRxw0e5su5_Nsc",
+            authDomain: "jadwal-dzikir-najmushshaghir.firebaseapp.com",
+            projectId: "jadwal-dzikir-najmushshaghir",
+            storageBucket: "jadwal-dzikir-najmushshaghir.firebasestorage.app",
+            messagingSenderId: "694686087199",
+            appId: "1:694686087199:web:df3358d52dc024779c3d2a",
+            measurementId: "G-MHGZDS40SM"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // Mengaktifkan fitur Offline Cache agar tetap tampil saat internet terputus (PWA support)
+        enableIndexedDbPersistence(db).catch((err) => {
+            console.warn("Catatan Offline cache:", err.message);
+        });
+
+        // State Management
+        let currentUser = null;
+        let schedulesData = [];
+        let itemToDelete = null;
+        const COLLECTION_NAME = "jadwal_2026"; // Adjusted for cleaner naming
+
+        // DOM Elements
+        const DOM = {
+            scheduleList: document.getElementById('scheduleList'),
+            listLoading: document.getElementById('listLoading'),
+            listEmpty: document.getElementById('listEmpty'),
+            statTotal: document.getElementById('statTotal'),
+            statCompleted: document.getElementById('statCompleted'),
+            statPending: document.getElementById('statPending'),
+            progressBar: document.getElementById('progressBar'),
+            progressText: document.getElementById('progressText'),
+            searchInput: document.getElementById('searchInput'),
+            monthFilter: document.getElementById('monthFilter'),
+            adminActions: document.getElementById('adminActions'),
+            authBtn: document.getElementById('authBtn'),
+            authBtnText: document.getElementById('authBtnText'),
+            loginForm: document.getElementById('loginForm'),
+            scheduleForm: document.getElementById('scheduleForm'),
+            confirmDeleteBtn: document.getElementById('confirmDeleteBtn'),
+            fileInput: document.getElementById('fileInput'),
+            themeToggle: document.getElementById('themeToggle'),
+            themeIcon: document.getElementById('themeIcon')
+        };
+
+
+        // --- Theme Management ---
+        const initTheme = () => {
+            const isDark = localStorage.getItem('theme') === 'dark' || 
+                          (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            if (isDark) document.documentElement.classList.add('dark');
+            updateThemeIcon();
+        };
+
+        const updateThemeIcon = () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            DOM.themeIcon.className = isDark ? 'fa-solid fa-sun text-lg text-amber-400' : 'fa-solid fa-moon text-lg';
+        };
+
+        DOM.themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateThemeIcon();
+        });
+        initTheme();
+
+        // --- Custom Toast Notification ---
+        window.showToast = (message, type = 'success') => {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            const colors = {
+                success: 'bg-green-600',
+                error: 'bg-red-600',
+                info: 'bg-blue-600'
+            };
+            
+            toast.className = `${colors[type] || colors.success} text-white px-6 py-3 rounded-xl shadow-lg transform transition-all duration-300 translate-x-full flex items-center gap-3`;
+            toast.innerHTML = `
+                <i class="fa-solid ${type === 'error' ? 'fa-circle-exclamation' : 'fa-check-circle'}"></i>
+                <span class="font-medium text-sm">${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Trigger animation
+            setTimeout(() => toast.classList.remove('translate-x-full'), 10);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        };
+
+        // --- Modal Management ---
+        window.openModal = (modalId) => {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('hidden');
+            // Trigger reflow
+            void modal.offsetWidth;
+            modal.classList.remove('opacity-0');
+            modal.querySelector('div').classList.remove('scale-95');
+        };
+
+        window.closeModal = (modalId) => {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('opacity-0');
+            modal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+            
+            // Reset forms if closing add/edit modal
+            if(modalId === 'addModal') DOM.scheduleForm.reset();
+            if(modalId === 'loginModal') DOM.loginForm.reset();
+        };
+
+        
+        // --- Authentication ---
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            if (user) {
+                DOM.adminActions.classList.remove('hidden');
+                DOM.authBtnText.textContent = "Logout Admin";
+                DOM.authBtn.querySelector('i').className = "fa-solid fa-sign-out-alt";
+                DOM.authBtn.onclick = handleLogout;
+                document.body.classList.add('is-admin'); // For CSS targeting
+                showToast("Selamat datang, Admin");
+            } else {
+                DOM.adminActions.classList.add('hidden');
+                DOM.authBtnText.textContent = "Admin Login";
+                DOM.authBtn.querySelector('i').className = "fa-solid fa-user-shield";
+                DOM.authBtn.onclick = () => openModal('loginModal');
+                document.body.classList.remove('is-admin');
+            }
+            renderList(); // Re-render to show/hide edit buttons
+        });
+
+        DOM.loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitLoginBtn');
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<div class="spinner border-t-white w-5 h-5 mx-auto"></div>';
+            
+            try {
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                await signInWithEmailAndPassword(auth, email, password);
+                closeModal('loginModal');
+            } catch (error) {
+                showToast("Login gagal. Periksa kredensial anda.", "error");
+                console.error("Auth error:", error);
+            } finally {
+                btn.innerHTML = originalContent;
+            }
+        });
+
+        const handleLogout = async () => {
+            try {
+                await signOut(auth);
+                showToast("Berhasil logout");
+            } catch (error) {
+                showToast("Gagal logout", "error");
+            }
+        };
+
+
+        // --- Data Fetching & Rendering ---
+        const formatIDDate = (dateString) => {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('id-ID', options);
+        };
+
+        const updateDashboard = () => {
+            const total = schedulesData.length;
+            const completed = schedulesData.filter(s => s.isCompleted).length;
+            const pending = total - completed;
+            const percentage = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+            // Animate numbers (simple implementation)
+            DOM.statTotal.textContent = total;
+            DOM.statCompleted.textContent = completed;
+            DOM.statPending.textContent = pending;
+            
+            DOM.progressBar.style.width = `${percentage}%`;
+            DOM.progressText.textContent = `${percentage}%`;
+        };
+
+        const renderList = () => {
+            const searchTerm = DOM.searchInput.value.toLowerCase();
+            const monthFilter = DOM.monthFilter.value;
+            
+            let filtered = schedulesData.filter(item => {
+                const matchSearch = item.place.toLowerCase().includes(searchTerm) || 
+                                    item.timeDetails.toLowerCase().includes(searchTerm);
+                const itemMonth = item.date.split('-')[1]; // YYYY-MM-DD
+                const matchMonth = monthFilter === 'all' || itemMonth === monthFilter;
+                return matchSearch && matchMonth;
+            });
+
+            DOM.scheduleList.innerHTML = '';
+
+            if (filtered.length === 0) {
+                DOM.scheduleList.classList.add('hidden');
+                DOM.listEmpty.classList.remove('hidden');
+                DOM.listEmpty.style.display = 'flex';
+            } else {
+                DOM.listEmpty.classList.add('hidden');
+                DOM.listEmpty.style.display = 'none';
+                DOM.scheduleList.classList.remove('hidden');
+
+                filtered.forEach((item, index) => {
+                    const li = document.createElement('li');
+                    li.className = `p-4 sm:p-5 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between ${item.isCompleted ? 'bg-islamic-50/50 dark:bg-islamic-900/10' : ''}`;
+                    
+                    const statusIcon = item.isCompleted 
+                        ? `<div class="w-10 h-10 rounded-full bg-islamic-100 dark:bg-islamic-900/50 text-islamic-600 dark:text-islamic-400 flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-check"></i></div>`
+                        : `<div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-400 flex items-center justify-center flex-shrink-0"><i class="fa-regular fa-calendar"></i></div>`;
+                    
+                    const adminControls = currentUser ? `
+                        <div class="flex items-center gap-2 mt-3 sm:mt-0 w-full sm:w-auto justify-end border-t border-gray-100 dark:border-gray-700 sm:border-0 pt-3 sm:pt-0">
+                            <button onclick="toggleStatus('${item.id}', ${item.isCompleted})" class="p-2 text-sm font-medium rounded-lg transition ${item.isCompleted ? 'text-amber-600 bg-amber-50 hover:bg-amber-100 dark:bg-amber-900/30 dark:hover:bg-amber-900/50' : 'text-islamic-600 bg-islamic-50 hover:bg-islamic-100 dark:bg-islamic-900/30 dark:hover:bg-islamic-900/50'}" title="${item.isCompleted ? 'Batal Centang' : 'Centang Kehadiran'}">
+                                <i class="fa-solid ${item.isCompleted ? 'fa-rotate-left' : 'fa-check'}"></i>
+                            </button>
+                            <button onclick="editItem('${item.id}')" class="p-2 text-blue-600 bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 rounded-lg transition" title="Edit">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button onclick="confirmDelete('${item.id}')" class="p-2 text-red-600 bg-red-50 hover:bg-red-100 dark:bg-red-900/30 dark:hover:bg-red-900/50 rounded-lg transition" title="Hapus">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    ` : '';
+
+                    li.innerHTML = `
+                        <div class="flex items-start gap-4 flex-grow">
+                            ${statusIcon}
+                            <div>
+                                <h4 class="font-bold text-gray-900 dark:text-white text-base sm:text-lg ${item.isCompleted ? 'line-through text-gray-500 dark:text-gray-400' : ''}">
+                                    <span class="text-islamic-600 dark:text-islamic-400 mr-1">${index + 1}.)</span> ${item.place}
+                                </h4>
+                                <div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1 text-sm text-gray-500 dark:text-gray-400">
+                                    <span class="flex items-center gap-1.5"><i class="fa-regular fa-calendar-days text-gray-400"></i> ${formatIDDate(item.date)}</span>
+                                    <span class="flex items-center gap-1.5"><i class="fa-regular fa-clock text-gray-400"></i> ${item.timeDetails}</span>
+                                </div>
+                            </div>
+                        </div>
+                        ${adminControls}
+                    `;
+                    DOM.scheduleList.appendChild(li);
+                });
+            }
+        };
+
+        // Real-time Listener
+        const q = query(collection(db, COLLECTION_NAME), orderBy("date", "asc"));
+        
+        onSnapshot(q, (snapshot) => {
+            schedulesData = [];
+            snapshot.forEach((doc) => {
+                schedulesData.push({ id: doc.id, ...doc.data() });
+            });
+            
+            DOM.listLoading.classList.add('hidden');
+            updateDashboard();
+            renderList();
+        }, (error) => {
+            console.error("Error fetching data:", error);
+            DOM.listLoading.classList.remove('hidden');
+            if (error.code === 'permission-denied') {
+                DOM.listLoading.innerHTML = `
+                    <div class="text-center p-6 bg-red-50 dark:bg-red-900/20 rounded-xl border border-red-200 dark:border-red-800 max-w-lg mx-auto">
+                        <i class="fa-solid fa-lock text-red-500 text-3xl mb-3"></i>
+                        <h3 class="text-red-700 dark:text-red-400 font-bold mb-2">Akses Database Ditolak (Permission Denied)</h3>
+                        <p class="text-red-600 dark:text-red-300 text-sm mb-4">Agar data dapat ditampilkan untuk tamu (Guest), silakan ubah <strong>Aturan (Rules) Firestore</strong> di Firebase Console Anda menjadi seperti ini:</p>
+                        <pre class="text-left bg-gray-900 text-gray-100 p-4 rounded-lg text-xs overflow-x-auto font-mono"><code>rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}</code></pre>
+                        <p class="text-red-600 dark:text-red-300 text-xs mt-3">Buka Firebase Console > Firestore Database > Rules > Paste kode di atas > Publish.</p>
+                    </div>`;
+            } else {
+                DOM.listLoading.innerHTML = `<p class="text-red-500"><i class="fa-solid fa-triangle-exclamation"></i> Gagal memuat data: ${error.message}</p>`;
+            }
+        });
+
+        // Event Listeners for Filters
+        DOM.searchInput.addEventListener('input', renderList);
+        DOM.monthFilter.addEventListener('change', renderList);
+
+
+        // --- CRUD Operations ---
+        DOM.scheduleForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentUser) return showToast("Akses ditolak", "error");
+
+            const id = document.getElementById('editId').value;
+            const btn = document.getElementById('saveBtn');
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<div class="spinner border-t-white w-4 h-4 mr-2"></div> Menyimpan...';
+            btn.disabled = true;
+
+            const data = {
+                date: document.getElementById('inputDate').value,
+                place: document.getElementById('inputPlace').value,
+                timeDetails: document.getElementById('inputTime').value,
+                isCompleted: document.getElementById('inputStatus').checked,
+                timestamp: serverTimestamp()
+            };
+
+            try {
+                if (id) {
+                    await updateDoc(doc(db, COLLECTION_NAME, id), data);
+                    showToast("Jadwal berhasil diperbarui");
+                } else {
+                    await addDoc(collection(db, COLLECTION_NAME), data);
+                    showToast("Jadwal baru ditambahkan");
+                }
+                closeModal('addModal');
+            } catch (error) {
+                console.error("Error saving doc:", error);
+                showToast("Gagal menyimpan data", "error");
+            } finally {
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+            }
+        });
+
+        window.editItem = (id) => {
+            const item = schedulesData.find(s => s.id === id);
+            if (!item) return;
+
+            document.getElementById('modalTitle').textContent = "Edit Jadwal";
+            document.getElementById('editId').value = item.id;
+            document.getElementById('inputDate').value = item.date;
+            document.getElementById('inputPlace').value = item.place;
+            document.getElementById('inputTime').value = item.timeDetails;
+            document.getElementById('inputStatus').checked = item.isCompleted;
+            
+            openModal('addModal');
+        };
+
+        window.toggleStatus = async (id, currentStatus) => {
+            if (!currentUser) return;
+            try {
+                await updateDoc(doc(db, COLLECTION_NAME, id), { isCompleted: !currentStatus });
+                showToast(currentStatus ? "Tanda kehadiran dihapus" : "Ditandai telah hadir");
+            } catch (error) {
+                showToast("Gagal mengubah status", "error");
+            }
+        };
+
+        window.confirmDelete = (id) => {
+            Swal.fire({
+                title: 'Hapus Jadwal?',
+                text: "Data yang dihapus tidak dapat dikembalikan lagi. Yakin ingin melanjutkan?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal',
+                background: document.documentElement.classList.contains('dark') ? '#1f2937' : '#ffffff',
+                color: document.documentElement.classList.contains('dark') ? '#f3f4f6' : '#111827',
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        await deleteDoc(doc(db, COLLECTION_NAME, id));
+                        showToast("Jadwal berhasil dihapus");
+                    } catch (error) {
+                        showToast("Gagal menghapus data", "error");
+                    }
+                }
+            });
+        };
+
+        // --- Export / Import ---
+        window.exportData = () => {
+            if (schedulesData.length === 0) return showToast("Tidak ada data untuk diexport", "error");
+            
+            const headers = ["Tanggal (YYYY-MM-DD)", "Nama Tempat", "Keterangan Waktu", "Status Hadir"];
+            const csvContent = [
+                headers.join(","),
+                ...schedulesData.map(item => `"${item.date}","${item.place}","${item.timeDetails}","${item.isCompleted ? 'Ya' : 'Belum'}"`)
+            ].join("\n");
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", `Jadwal_Dzikir_2026_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast("Berhasil mengekspor data");
+        };
+
+        DOM.fileInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = async (event) => {
+                const text = event.target.result;
+                const lines = text.split('\n');
+                
+                // Skip header (i=1)
+                let addedCount = 0;
+                
+                showToast("Memulai proses impor...", "success");
+                
+                // Process sequentially to not overload
+                for (let i = 1; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    if (!line) continue;
+                    
+                    // Simple CSV parser ignoring commas inside quotes
+                    const cols = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+                    if (cols && cols.length >= 3) {
+                        try {
+                            const dateStr = cols[0].replace(/"/g, '');
+                            const placeStr = cols[1].replace(/"/g, '');
+                            const timeStr = cols[2].replace(/"/g, '');
+                            const statusStr = cols[3] ? cols[3].replace(/"/g, '').toLowerCase() : 'belum';
+                            
+                            // Basic validation
+                            if(dateStr.length === 10 && placeStr) {
+                                await addDoc(collection(db, COLLECTION_NAME), {
+                                    date: dateStr,
+                                    place: placeStr,
+                                    timeDetails: timeStr,
+                                    isCompleted: statusStr === 'ya',
+                                    timestamp: serverTimestamp()
+                                });
+                                addedCount++;
+                            }
+                        } catch (err) {
+                            console.error("Error adding row", err);
+                        }
+                    }
+                }
+                
+                DOM.fileInput.value = ''; // Reset input
+                showToast(`Berhasil mengimpor ${addedCount} jadwal`);
+            };
+            reader.readAsText(file);
+        });
+
+    </script>
+</body>
+</html>
