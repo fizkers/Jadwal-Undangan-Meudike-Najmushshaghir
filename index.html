@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jadwal Dzikir Najmushshaghir 2026</title>
-
+    
+    <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="favicon balai najmushshaghir terbaru.png">
     <link rel="apple-touch-icon" href="favicon balai najmushshaghir terbaru.png">
-    <link rel="manifest" href="manifest.json">
-    
     <meta name="theme-color" content="#065f46">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -17,11 +16,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -76,11 +72,24 @@
 
 <body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 transition-colors duration-300 font-sans antialiased min-h-screen flex flex-col">
 
+    <div id="appLoader" class="fixed inset-0 bg-islamic-900 z-[100] flex flex-col items-center justify-center transition-opacity duration-500">
+        <div class="text-center flex flex-col items-center px-4">
+            <img src="favicon balai najmushshaghir terbaru.png" alt="Logo Balai Najmushshaghir" class="w-24 h-24 mb-4 rounded-full border-2 border-islamic-gold shadow-xl animate-pulse">
+            <h1 class="font-serif text-2xl font-bold text-white tracking-wide mb-1">Najmushshaghir</h1>
+            <p class="text-islamic-100 text-xs tracking-wider mb-6">Jadwal Undangan Meudike 2026</p>
+            <div class="flex items-center gap-1.5">
+                <div class="w-2.5 h-2.5 bg-islamic-gold rounded-full animate-bounce" style="animation-delay: 0s"></div>
+                <div class="w-2.5 h-2.5 bg-islamic-gold rounded-full animate-bounce" style="animation-delay: 0.15s"></div>
+                <div class="w-2.5 h-2.5 bg-islamic-gold rounded-full animate-bounce" style="animation-delay: 0.3s"></div>
+            </div>
+        </div>
+    </div>
+
     <nav class="bg-islamic-900 text-white shadow-lg sticky top-0 z-40 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center gap-3">
-                    <img src="favicon balai najmushshaghir terbaru.png" alt="Logo Balai" class="w-8 h-8 object-contain">
+                    <i class="fa-solid fa-mosque text-islamic-gold text-2xl"></i>
                     <h1 class="font-serif font-bold text-lg sm:text-xl tracking-wide">Balai Pengajian Najmushshaghir</h1>
                 </div>
                 <div class="flex items-center gap-4">
@@ -96,7 +105,6 @@
     </nav>
 
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
-        
         <div class="text-center mb-10 fade-in">
             <h2 class="text-3xl sm:text-4xl font-serif font-bold text-islamic-900 dark:text-islamic-50 mb-2">Jadwal Undangan Meudike Najmushshaghir 2026</h2>
             <p class="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">Sistem informasi manajemen kehadiran meudike. Semoga Allah SWT memudahkan setiap langkah dalam perjalanan.</p>
@@ -271,26 +279,20 @@
         </div>
     </div>
 
-    <div id="deleteModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
-        <div class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform duration-300 mx-4 text-center">
-            <div class="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4 text-red-600 dark:text-red-400 text-2xl">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Hapus Jadwal?</h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Data yang dihapus tidak dapat dikembalikan lagi. Yakin ingin melanjutkan?</p>
-            <div class="flex justify-center gap-3">
-                <button onclick="closeModal('deleteModal')" class="px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-xl transition">Batal</button>
-                <button id="confirmDeleteBtn" class="px-4 py-2.5 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-xl transition">Ya, Hapus</button>
-            </div>
-        </div>
-    </div>
-
     <div id="toastContainer" class="fixed bottom-4 right-4 z-[60] flex flex-col gap-2"></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((reg) => console.log('SW registered:', reg.scope))
+                    .catch((err) => console.log('SW registration failed:', err));
+            });
+        }
 
         const firebaseConfig = {
             apiKey: "AIzaSyBocf8HfjKRYZEGDel9MQRxw0e5su5_Nsc",
@@ -307,12 +309,11 @@
         const auth = getAuth(app);
 
         enableIndexedDbPersistence(db).catch((err) => {
-            console.warn("Catatan Offline cache:", err.message);
+            console.warn("Offline cache status:", err.message);
         });
 
         let currentUser = null;
         let schedulesData = [];
-        let itemToDelete = null;
         const COLLECTION_NAME = "jadwal_2026";
 
         const DOM = {
@@ -331,7 +332,6 @@
             authBtnText: document.getElementById('authBtnText'),
             loginForm: document.getElementById('loginForm'),
             scheduleForm: document.getElementById('scheduleForm'),
-            confirmDeleteBtn: document.getElementById('confirmDeleteBtn'),
             fileInput: document.getElementById('fileInput'),
             themeToggle: document.getElementById('themeToggle'),
             themeIcon: document.getElementById('themeIcon')
@@ -373,9 +373,7 @@
             `;
             
             container.appendChild(toast);
-            
             setTimeout(() => toast.classList.remove('translate-x-full'), 10);
-            
             setTimeout(() => {
                 toast.classList.add('translate-x-full');
                 setTimeout(() => toast.remove(), 300);
@@ -496,7 +494,7 @@
                     li.className = `p-4 sm:p-5 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between ${item.isCompleted ? 'bg-islamic-50/50 dark:bg-islamic-900/10' : ''}`;
                     
                     const statusIcon = item.isCompleted 
-                            ? `<div class="w-10 h-10 rounded-full bg-islamic-100 dark:bg-islamic-900/50 text-islamic-600 dark:text-islamic-400 flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-check"></i></div>`
+                        ? `<div class="w-10 h-10 rounded-full bg-islamic-100 dark:bg-islamic-900/50 text-islamic-600 dark:text-islamic-400 flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-check"></i></div>`
                         : `<div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-400 flex items-center justify-center flex-shrink-0"><i class="fa-regular fa-calendar"></i></div>`;
                     
                     const adminControls = currentUser ? `
@@ -542,27 +540,27 @@
             });
             
             DOM.listLoading.classList.add('hidden');
+            const appLoader = document.getElementById('appLoader');
+            if (appLoader) {
+                appLoader.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => appLoader.remove(), 500);
+            }
             updateDashboard();
             renderList();
         }, (error) => {
+            const appLoader = document.getElementById('appLoader');
+            if (appLoader) {
+                appLoader.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => appLoader.remove(), 500);
+            }
             console.error("Error fetching data:", error);
             DOM.listLoading.classList.remove('hidden');
             if (error.code === 'permission-denied') {
                 DOM.listLoading.innerHTML = `
                     <div class="text-center p-6 bg-red-50 dark:bg-red-900/20 rounded-xl border border-red-200 dark:border-red-800 max-w-lg mx-auto">
                         <i class="fa-solid fa-lock text-red-500 text-3xl mb-3"></i>
-                        <h3 class="text-red-700 dark:text-red-400 font-bold mb-2">Akses Database Ditolak (Permission Denied)</h3>
-                        <p class="text-red-600 dark:text-red-300 text-sm mb-4">Agar data dapat ditampilkan untuk tamu (Guest), silakan ubah <strong>Aturan (Rules) Firestore</strong> di Firebase Console Anda menjadi seperti ini:</p>
-                        <pre class="text-left bg-gray-900 text-gray-100 p-4 rounded-lg text-xs overflow-x-auto font-mono"><code>rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /{document=**} {
-      allow read: if true;
-      allow write: if request.auth != null;
-    }
-  }
-}</code></pre>
-                        <p class="text-red-600 dark:text-red-300 text-xs mt-3">Buka Firebase Console > Firestore Database > Rules > Paste kode di atas > Publish.</p>
+                        <h3 class="text-red-700 dark:text-red-400 font-bold mb-2">Akses Database Ditolak</h3>
+                        <p class="text-red-600 dark:text-red-300 text-sm mb-4">Ubah Aturan (Rules) Firestore di Firebase Console agar terbuka untuk dibaca public.</p>
                     </div>`;
             } else {
                 DOM.listLoading.innerHTML = `<p class="text-red-500"><i class="fa-solid fa-triangle-exclamation"></i> Gagal memuat data: ${error.message}</p>`;
@@ -669,7 +667,7 @@ service cloud.firestore {
 
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement("a");
-            const url = URL.URL.createObjectURL ? URL.createObjectURL(blob) : window.URL.createObjectURL(blob);
+            const url = URL.createObjectURL(blob);
             link.setAttribute("href", url);
             link.setAttribute("download", `Jadwal_Dzikir_2026_${new Date().toISOString().split('T')[0]}.csv`);
             link.style.visibility = 'hidden';
@@ -687,7 +685,6 @@ service cloud.firestore {
             reader.onload = async (event) => {
                 const text = event.target.result;
                 const lines = text.split('\n');
-                
                 let addedCount = 0;
                 
                 showToast("Memulai proses impor...", "success");
@@ -725,16 +722,6 @@ service cloud.firestore {
             };
             reader.readAsText(file);
         });
-
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').then((reg) => {
-                    console.log('Service Worker berhasil aktif:', reg.scope);
-                }).catch((err) => {
-                    console.error('Service Worker gagal:', err);
-                });
-            });
-        }
     </script>
 </body>
 </html>
