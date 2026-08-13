@@ -4,25 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jadwal Dzikir Najmushshaghir 2026</title>
+
+    <link rel="icon" type="image/png" href="favicon balai najmushshaghir terbaru.png">
+    <link rel="apple-touch-icon" href="favicon balai najmushshaghir terbaru.png">
+    <link rel="manifest" href="manifest.json">
     
-    <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#065f46">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="description" content="Sistem Informasi Jadwal Undangan Dzikir Najmushshaghir 2026">
     
-    <!-- Fonts: Inter for UI, Amiri for Islamic feel -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -51,7 +50,6 @@
     </script>
     
     <style>
-        /* Custom Scrollbar & Animations */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
@@ -64,7 +62,6 @@
         .slide-up { animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        /* Loader */
         .spinner {
             border: 3px solid rgba(255,255,255,0.3);
             border-radius: 50%;
@@ -79,12 +76,11 @@
 
 <body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 transition-colors duration-300 font-sans antialiased min-h-screen flex flex-col">
 
-    <!-- Navbar -->
     <nav class="bg-islamic-900 text-white shadow-lg sticky top-0 z-40 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-mosque text-islamic-gold text-2xl"></i>
+                    <img src="favicon balai najmushshaghir terbaru.png" alt="Logo Balai" class="w-8 h-8 object-contain">
                     <h1 class="font-serif font-bold text-lg sm:text-xl tracking-wide">Balai Pengajian Najmushshaghir</h1>
                 </div>
                 <div class="flex items-center gap-4">
@@ -99,16 +95,13 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         
-        <!-- Header Section -->
         <div class="text-center mb-10 fade-in">
             <h2 class="text-3xl sm:text-4xl font-serif font-bold text-islamic-900 dark:text-islamic-50 mb-2">Jadwal Undangan Meudike Najmushshaghir 2026</h2>
             <p class="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">Sistem informasi manajemen kehadiran meudike. Semoga Allah SWT memudahkan setiap langkah dalam perjalanan.</p>
         </div>
 
-        <!-- Dashboard Statistics -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 fade-in" style="animation-delay: 0.1s;">
             <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-between">
                 <div>
@@ -139,7 +132,6 @@
             </div>
         </div>
 
-        <!-- Progress Bar -->
         <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700 mb-8 fade-in" style="animation-delay: 0.2s;">
             <div class="flex justify-between text-sm mb-2 font-medium">
                 <span class="text-gray-600 dark:text-gray-300">Progress Kehadiran Tahun Ini</span>
@@ -150,15 +142,12 @@
             </div>
         </div>
 
-        <!-- Controls Toolbar -->
         <div class="flex flex-col md:flex-row gap-4 justify-between items-center mb-6 fade-in" style="animation-delay: 0.3s;">
             <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-                <!-- Search -->
                 <div class="relative w-full sm:w-64">
                     <i class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                     <input type="text" id="searchInput" placeholder="Cari nama tempat..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-islamic-500 outline-none transition text-sm">
                 </div>
-                <!-- Month Filter -->
                 <select id="monthFilter" class="w-full sm:w-48 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-islamic-500 outline-none transition text-sm appearance-none cursor-pointer">
                     <option value="all">Semua Bulan</option>
                     <option value="01">Januari</option>
@@ -176,7 +165,6 @@
                 </select>
             </div>
             
-            <!-- Admin Actions (Hidden by default) -->
             <div id="adminActions" class="hidden flex gap-2 w-full md:w-auto justify-end">
                 <button onclick="document.getElementById('fileInput').click()" class="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-xl text-sm font-medium transition flex items-center gap-2 text-gray-700 dark:text-gray-200">
                     <i class="fa-solid fa-file-import"></i> <span class="hidden sm:inline">Import</span>
@@ -193,28 +181,22 @@
             </div>
         </div>
 
-        <!-- List Container -->
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden fade-in" style="animation-delay: 0.4s;">
-            <!-- Initial Loading State -->
             <div id="listLoading" class="p-12 flex flex-col items-center justify-center text-gray-400">
                 <i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3 text-islamic-500"></i>
                 <p>Memuat jadwal...</p>
             </div>
             
-            <!-- Empty State -->
             <div id="listEmpty" class="hidden p-12 flex-col items-center justify-center text-gray-400">
                 <i class="fa-regular fa-calendar-xmark text-4xl mb-3 text-gray-300 dark:text-gray-600"></i>
                 <p>Tidak ada jadwal ditemukan.</p>
             </div>
 
-            <!-- Data List -->
             <ul id="scheduleList" class="divide-y divide-gray-100 dark:divide-gray-700 hidden">
-                <!-- Items injected via JS -->
             </ul>
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 mt-auto transition-colors">
         <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
             <p>&copy; 2026 Majelis Dzikir Najmushshaghir.</p>
@@ -224,9 +206,6 @@
         </div>
     </footer>
 
-    <!-- MODALS -->
-    
-    <!-- Login Modal -->
     <div id="loginModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
         <div class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform duration-300 relative mx-4">
             <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><i class="fa-solid fa-xmark text-xl"></i></button>
@@ -253,7 +232,6 @@
         </div>
     </div>
 
-    <!-- Add/Edit Modal -->
     <div id="addModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
         <div class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md p-6 shadow-2xl transform scale-95 transition-transform duration-300 relative mx-4">
             <button onclick="closeModal('addModal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><i class="fa-solid fa-xmark text-xl"></i></button>
@@ -293,7 +271,6 @@
         </div>
     </div>
 
-    <!-- Confirm Delete Modal -->
     <div id="deleteModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
         <div class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform duration-300 mx-4 text-center">
             <div class="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4 text-red-600 dark:text-red-400 text-2xl">
@@ -301,23 +278,20 @@
             </div>
             <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Hapus Jadwal?</h3>
             <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Data yang dihapus tidak dapat dikembalikan lagi. Yakin ingin melanjutkan?</p>
-                <button onclick="openModal('addModal')" class="px-4 py-2.5 bg-islamic-600 hover:bg-islamic-700 text-white rounded-xl text-sm font-medium transition flex items-center gap-2">
-                    <i class="fa-solid fa-plus"></i> Tambah Jadwal
-                </button>
+            <div class="flex justify-center gap-3">
+                <button onclick="closeModal('deleteModal')" class="px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-xl transition">Batal</button>
+                <button id="confirmDeleteBtn" class="px-4 py-2.5 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-xl transition">Ya, Hapus</button>
             </div>
         </div>
     </div>
 
-    <!-- Toast Notification Container -->
     <div id="toastContainer" class="fixed bottom-4 right-4 z-[60] flex flex-col gap-2"></div>
 
-    <!-- Application Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Firebase Configuration (Provided by user)
         const firebaseConfig = {
             apiKey: "AIzaSyBocf8HfjKRYZEGDel9MQRxw0e5su5_Nsc",
             authDomain: "jadwal-dzikir-najmushshaghir.firebaseapp.com",
@@ -328,23 +302,19 @@
             measurementId: "G-MHGZDS40SM"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
 
-        // Mengaktifkan fitur Offline Cache agar tetap tampil saat internet terputus (PWA support)
         enableIndexedDbPersistence(db).catch((err) => {
             console.warn("Catatan Offline cache:", err.message);
         });
 
-        // State Management
         let currentUser = null;
         let schedulesData = [];
         let itemToDelete = null;
-        const COLLECTION_NAME = "jadwal_2026"; // Adjusted for cleaner naming
+        const COLLECTION_NAME = "jadwal_2026";
 
-        // DOM Elements
         const DOM = {
             scheduleList: document.getElementById('scheduleList'),
             listLoading: document.getElementById('listLoading'),
@@ -367,8 +337,6 @@
             themeIcon: document.getElementById('themeIcon')
         };
 
-
-        // --- Theme Management ---
         const initTheme = () => {
             const isDark = localStorage.getItem('theme') === 'dark' || 
                           (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
@@ -389,7 +357,6 @@
         });
         initTheme();
 
-        // --- Custom Toast Notification ---
         window.showToast = (message, type = 'success') => {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
@@ -407,21 +374,17 @@
             
             container.appendChild(toast);
             
-            // Trigger animation
             setTimeout(() => toast.classList.remove('translate-x-full'), 10);
             
-            // Remove after 3 seconds
             setTimeout(() => {
                 toast.classList.add('translate-x-full');
                 setTimeout(() => toast.remove(), 300);
             }, 3000);
         };
 
-        // --- Modal Management ---
         window.openModal = (modalId) => {
             const modal = document.getElementById(modalId);
             modal.classList.remove('hidden');
-            // Trigger reflow
             void modal.offsetWidth;
             modal.classList.remove('opacity-0');
             modal.querySelector('div').classList.remove('scale-95');
@@ -433,13 +396,10 @@
             modal.querySelector('div').classList.add('scale-95');
             setTimeout(() => modal.classList.add('hidden'), 300);
             
-            // Reset forms if closing add/edit modal
             if(modalId === 'addModal') DOM.scheduleForm.reset();
             if(modalId === 'loginModal') DOM.loginForm.reset();
         };
 
-        
-        // --- Authentication ---
         onAuthStateChanged(auth, (user) => {
             currentUser = user;
             if (user) {
@@ -447,7 +407,7 @@
                 DOM.authBtnText.textContent = "Logout Admin";
                 DOM.authBtn.querySelector('i').className = "fa-solid fa-sign-out-alt";
                 DOM.authBtn.onclick = handleLogout;
-                document.body.classList.add('is-admin'); // For CSS targeting
+                document.body.classList.add('is-admin');
                 showToast("Selamat datang, Admin");
             } else {
                 DOM.adminActions.classList.add('hidden');
@@ -456,7 +416,7 @@
                 DOM.authBtn.onclick = () => openModal('loginModal');
                 document.body.classList.remove('is-admin');
             }
-            renderList(); // Re-render to show/hide edit buttons
+            renderList();
         });
 
         DOM.loginForm.addEventListener('submit', async (e) => {
@@ -487,8 +447,6 @@
             }
         };
 
-
-        // --- Data Fetching & Rendering ---
         const formatIDDate = (dateString) => {
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             return new Date(dateString).toLocaleDateString('id-ID', options);
@@ -500,7 +458,6 @@
             const pending = total - completed;
             const percentage = total === 0 ? 0 : Math.round((completed / total) * 100);
 
-            // Animate numbers (simple implementation)
             DOM.statTotal.textContent = total;
             DOM.statCompleted.textContent = completed;
             DOM.statPending.textContent = pending;
@@ -513,13 +470,12 @@
             const searchTerm = DOM.searchInput.value.toLowerCase();
             const monthFilter = DOM.monthFilter.value;
             
-            // Mengurutkan berdasarkan tanggal secara default agar tidak dibatasi oleh angka order
             let filtered = [...schedulesData].sort((a, b) => {
                 return new Date(a.date) - new Date(b.date);
             }).filter(item => {
                 const matchSearch = item.place.toLowerCase().includes(searchTerm) || 
                                     item.timeDetails.toLowerCase().includes(searchTerm);
-                const itemMonth = item.date.split('-')[1]; // YYYY-MM-DD
+                const itemMonth = item.date.split('-')[1];
                 const matchMonth = monthFilter === 'all' || itemMonth === monthFilter;
                 return matchSearch && matchMonth;
             });
@@ -536,48 +492,47 @@
                 DOM.scheduleList.classList.remove('hidden');
 
                 filtered.forEach((item, index) => {
-                const li = document.createElement('li');
-                li.className = `p-4 sm:p-5 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between ${item.isCompleted ? 'bg-islamic-50/50 dark:bg-islamic-900/10' : ''}`;
-                
-                const statusIcon = item.isCompleted 
-                        ? `<div class="w-10 h-10 rounded-full bg-islamic-100 dark:bg-islamic-900/50 text-islamic-600 dark:text-islamic-400 flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-check"></i></div>`
-                    : `<div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-400 flex items-center justify-center flex-shrink-0"><i class="fa-regular fa-calendar"></i></div>`;
-                
-                const adminControls = currentUser ? `
-                    <div class="flex items-center gap-2 mt-3 sm:mt-0 w-full sm:w-auto justify-end border-t border-gray-100 dark:border-gray-700 sm:border-0 pt-3 sm:pt-0">
-                        <button onclick="toggleStatus('${item.id}', ${item.isCompleted})" class="p-2 text-sm font-medium rounded-lg transition ${item.isCompleted ? 'text-amber-600 bg-amber-50 hover:bg-amber-100 dark:bg-amber-900/30 dark:hover:bg-amber-900/50' : 'text-islamic-600 bg-islamic-50 hover:bg-islamic-100 dark:bg-islamic-900/30 dark:hover:bg-islamic-900/50'}" title="${item.isCompleted ? 'Batal Centang' : 'Centang Kehadiran'}">
-                            <i class="fa-solid ${item.isCompleted ? 'fa-rotate-left' : 'fa-check'}"></i>
-                        </button>
-                        <button onclick="editItem('${item.id}')" class="p-2 text-blue-600 bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 rounded-lg transition" title="Edit">
-                            <i class="fa-solid fa-pen"></i>
-                        </button>
-                        <button onclick="confirmDelete('${item.id}')" class="p-2 text-red-600 bg-red-50 hover:bg-red-100 dark:bg-red-900/30 dark:hover:bg-red-900/50 rounded-lg transition" title="Hapus">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </div>
-                ` : '';
+                    const li = document.createElement('li');
+                    li.className = `p-4 sm:p-5 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between ${item.isCompleted ? 'bg-islamic-50/50 dark:bg-islamic-900/10' : ''}`;
+                    
+                    const statusIcon = item.isCompleted 
+                            ? `<div class="w-10 h-10 rounded-full bg-islamic-100 dark:bg-islamic-900/50 text-islamic-600 dark:text-islamic-400 flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-check"></i></div>`
+                        : `<div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-400 flex items-center justify-center flex-shrink-0"><i class="fa-regular fa-calendar"></i></div>`;
+                    
+                    const adminControls = currentUser ? `
+                        <div class="flex items-center gap-2 mt-3 sm:mt-0 w-full sm:w-auto justify-end border-t border-gray-100 dark:border-gray-700 sm:border-0 pt-3 sm:pt-0">
+                            <button onclick="toggleStatus('${item.id}', ${item.isCompleted})" class="p-2 text-sm font-medium rounded-lg transition ${item.isCompleted ? 'text-amber-600 bg-amber-50 hover:bg-amber-100 dark:bg-amber-900/30 dark:hover:bg-amber-900/50' : 'text-islamic-600 bg-islamic-50 hover:bg-islamic-100 dark:bg-islamic-900/30 dark:hover:bg-islamic-900/50'}" title="${item.isCompleted ? 'Batal Centang' : 'Centang Kehadiran'}">
+                                <i class="fa-solid ${item.isCompleted ? 'fa-rotate-left' : 'fa-check'}"></i>
+                            </button>
+                            <button onclick="editItem('${item.id}')" class="p-2 text-blue-600 bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 rounded-lg transition" title="Edit">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button onclick="confirmDelete('${item.id}')" class="p-2 text-red-600 bg-red-50 hover:bg-red-100 dark:bg-red-900/30 dark:hover:bg-red-900/50 rounded-lg transition" title="Hapus">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    ` : '';
 
-                li.innerHTML = `
-                    <div class="flex items-start gap-4 flex-grow">
-                        ${statusIcon}
-                        <div>
-                            <h4 class="font-bold text-gray-900 dark:text-white text-base sm:text-lg ${item.isCompleted ? 'line-through text-gray-500 dark:text-gray-400' : ''}">
-                                <span class="text-islamic-600 dark:text-islamic-400 mr-1">${index + 1}.</span> ${item.place}
-                            </h4>
-                            <div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1 text-sm text-gray-500 dark:text-gray-400">
-                                <span class="flex items-center gap-1.5"><i class="fa-regular fa-calendar-days text-gray-400"></i> ${formatIDDate(item.date)}</span>
-                                <span class="flex items-center gap-1.5"><i class="fa-regular fa-clock text-gray-400"></i> ${item.timeDetails}</span>
+                    li.innerHTML = `
+                        <div class="flex items-start gap-4 flex-grow">
+                            ${statusIcon}
+                            <div>
+                                <h4 class="font-bold text-gray-900 dark:text-white text-base sm:text-lg ${item.isCompleted ? 'line-through text-gray-500 dark:text-gray-400' : ''}">
+                                    <span class="text-islamic-600 dark:text-islamic-400 mr-1">${index + 1}.</span> ${item.place}
+                                </h4>
+                                <div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1 text-sm text-gray-500 dark:text-gray-400">
+                                    <span class="flex items-center gap-1.5"><i class="fa-regular fa-calendar-days text-gray-400"></i> ${formatIDDate(item.date)}</span>
+                                    <span class="flex items-center gap-1.5"><i class="fa-regular fa-clock text-gray-400"></i> ${item.timeDetails}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    ${adminControls}
-                `;
-                DOM.scheduleList.appendChild(li);
-            });
-        }
-    };
+                        ${adminControls}
+                    `;
+                    DOM.scheduleList.appendChild(li);
+                });
+            }
+        };
 
-    // Real-time Listener
         const q = query(collection(db, COLLECTION_NAME), orderBy("date", "asc"));
         
         onSnapshot(q, (snapshot) => {
@@ -614,12 +569,9 @@ service cloud.firestore {
             }
         });
 
-        // Event Listeners for Filters
         DOM.searchInput.addEventListener('input', renderList);
         DOM.monthFilter.addEventListener('change', renderList);
 
-
-        // --- CRUD Operations ---
         DOM.scheduleForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             if (!currentUser) return showToast("Akses ditolak", "error");
@@ -706,7 +658,6 @@ service cloud.firestore {
             });
         };
 
-        // --- Export / Import ---
         window.exportData = () => {
             if (schedulesData.length === 0) return showToast("Tidak ada data untuk diexport", "error");
             
@@ -718,7 +669,7 @@ service cloud.firestore {
 
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement("a");
-            const url = URL.createObjectURL(blob);
+            const url = URL.URL.createObjectURL ? URL.createObjectURL(blob) : window.URL.createObjectURL(blob);
             link.setAttribute("href", url);
             link.setAttribute("download", `Jadwal_Dzikir_2026_${new Date().toISOString().split('T')[0]}.csv`);
             link.style.visibility = 'hidden';
@@ -737,17 +688,14 @@ service cloud.firestore {
                 const text = event.target.result;
                 const lines = text.split('\n');
                 
-                // Skip header (i=1)
                 let addedCount = 0;
                 
                 showToast("Memulai proses impor...", "success");
                 
-                // Process sequentially to not overload
                 for (let i = 1; i < lines.length; i++) {
                     const line = lines[i].trim();
                     if (!line) continue;
                     
-                    // Simple CSV parser ignoring commas inside quotes
                     const cols = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
                     if (cols && cols.length >= 3) {
                         try {
@@ -756,7 +704,6 @@ service cloud.firestore {
                             const timeStr = cols[2].replace(/"/g, '');
                             const statusStr = cols[3] ? cols[3].replace(/"/g, '').toLowerCase() : 'belum';
                             
-                            // Basic validation
                             if(dateStr.length === 10 && placeStr) {
                                 await addDoc(collection(db, COLLECTION_NAME), {
                                     date: dateStr,
@@ -773,12 +720,21 @@ service cloud.firestore {
                     }
                 }
                 
-                DOM.fileInput.value = ''; // Reset input
+                DOM.fileInput.value = '';
                 showToast(`Berhasil mengimpor ${addedCount} jadwal`);
             };
             reader.readAsText(file);
         });
 
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').then((reg) => {
+                    console.log('Service Worker berhasil aktif:', reg.scope);
+                }).catch((err) => {
+                    console.error('Service Worker gagal:', err);
+                });
+            });
+        }
     </script>
 </body>
 </html>
