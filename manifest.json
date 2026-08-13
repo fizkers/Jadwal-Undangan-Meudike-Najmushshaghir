@@ -1,0 +1,30 @@
+{
+  "name": "Jadwal Dzikir Najmushshaghir 2026",
+  "short_name": "Meudike",
+  "description": "Sistem Informasi Manajemen Jadwal Undangan Dzikir dan Meudike Balai Pengajian Najmushshaghir 2026.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#065f46",
+  "theme_color": "#065f46",
+  "lang": "id",
+  "categories": [
+    "lifestyle",
+    "utilities"
+  ],
+  "icons": [
+    {
+      "src": "favicon balai najmushshaghir terbaru.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "favicon balai najmushshaghir terbaru.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
