@@ -305,7 +305,7 @@
                         </div>
                     </div>
 
-                    <p class="text-xs text-amber-600 dark:text-amber-400 mt-2 font-medium"><i class="fa-solid fa-bell text-xs mr-1"></i> Notifikasi pengingat otomatis dikirimkan 2 jam sebelum jam acara (WIB).</p>
+                    <p class="text-xs text-amber-600 dark:text-amber-400 mt-2 font-medium"><i class="fa-solid fa-bell text-xs mr-1"></i> Notifikasi pengingat otomatis dikirimkan 2 jam & 1 jam sebelum jam acara (WIB).</p>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nomor Urut (Posisi)</label>
@@ -364,7 +364,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp, enableIndexedDbPersistence, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-messaging.js";
 
         let deferredPrompt = null;
         let swRegistration = null;
@@ -379,6 +380,7 @@
                     .then((reg) => {
                         console.log('SW registered:', reg.scope);
                         swRegistration = reg;
+                        setupFCM(reg);
                     })
                     .catch((err) => console.log('SW registration failed:', err));
             });
@@ -432,11 +434,8 @@
                     if (permission === 'granted') {
                         btnNotif.classList.add('hidden');
                         showToast("Notifikasi pengingat berhasil diaktifkan");
-                        if (swRegistration && schedulesData.length > 0) {
-                            swRegistration.active?.postMessage({
-                                type: 'SCHEDULE_UPDATE',
-                                schedules: schedulesData
-                            });
+                        if (swRegistration) {
+                            setupFCM(swRegistration);
                         }
                     } else {
                         showToast("Izin notifikasi ditolak", "error");
@@ -458,10 +457,34 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
+        let messaging = null;
+        try {
+            messaging = getMessaging(app);
+        } catch (e) {
+            console.log("FCM tidak didukung di browser ini", e);
+        }
 
         enableIndexedDbPersistence(db).catch((err) => {
             console.warn("Offline cache status:", err.message);
         });
+
+        async function setupFCM(registration) {
+            if (!messaging || Notification.permission !== 'granted') return;
+            try {
+                const token = await getToken(messaging, {
+                    serviceWorkerRegistration: registration
+                });
+                if (token) {
+                    await setDoc(doc(db, "fcm_tokens", token), {
+                        token: token,
+                        updatedAt: serverTimestamp(),
+                        platform: navigator.userAgent
+                    }, { merge: true });
+                }
+            } catch (err) {
+                console.error("Gagal memperoleh FCM Token:", err);
+            }
+        }
 
         let currentUser = null;
         let schedulesData = [];
