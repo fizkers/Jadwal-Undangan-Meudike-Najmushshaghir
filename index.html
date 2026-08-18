@@ -370,6 +370,18 @@
         let deferredPrompt = null;
         let swRegistration = null;
 
+        const hideAppLoader = () => {
+            const appLoader = document.getElementById('appLoader');
+            if (appLoader) {
+                appLoader.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    if (appLoader.parentNode) {
+                        appLoader.parentNode.removeChild(appLoader);
+                    }
+                }, 500);
+            }
+        };
+
         const isStandalone = () => {
             return (window.matchMedia('(display-mode: standalone)').matches) || (window.navigator.standalone === true);
         };
@@ -378,7 +390,6 @@
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
                     .then((reg) => {
-                        console.log('SW registered:', reg.scope);
                         swRegistration = reg;
                         setupFCM(reg);
                     })
@@ -457,11 +468,12 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
+        
         let messaging = null;
         try {
             messaging = getMessaging(app);
         } catch (e) {
-            console.log("FCM tidak didukung di browser ini", e);
+            console.log("FCM Messaging tidak didukung", e);
         }
 
         enableIndexedDbPersistence(db).catch((err) => {
@@ -469,11 +481,11 @@
         });
 
         async function setupFCM(registration) {
-            if (!messaging || Notification.permission !== 'granted') return;
+            if (!messaging || !('Notification' in window) || Notification.permission !== 'granted') return;
             try {
                 const token = await getToken(messaging, {
-                    serviceWorkerRegistration: registration
-                    vapidKey: "BEWdRMyyhfp2AMHcUoi9JQsupvSJUStQ9oYi9Awrv7CzWH5IW5VBOHuxlwcQf-Ai-EQCBQLl5sCbveEAyp2JjsA"
+                    serviceWorkerRegistration: registration,
+                    vapidKey: "BEWdRMyyhfp2AMHcUoi9JQsupvSJUSTQ9oYi9Awrv7CzWH5IW5VBOHuxlwcQf-Ai-EQCBQL15sCbveEAyp2JjsA"
                 });
                 if (token) {
                     await setDoc(doc(db, "fcm_tokens", token), {
@@ -743,11 +755,7 @@
             
             isInitialLoad = false;
             DOM.listLoading.classList.add('hidden');
-            const appLoader = document.getElementById('appLoader');
-            if (appLoader) {
-                appLoader.classList.add('opacity-0', 'pointer-events-none');
-                setTimeout(() => appLoader.remove(), 500);
-            }
+            hideAppLoader();
             updateDashboard();
             renderList();
 
@@ -758,11 +766,7 @@
                 });
             }
         }, (error) => {
-            const appLoader = document.getElementById('appLoader');
-            if (appLoader) {
-                appLoader.classList.add('opacity-0', 'pointer-events-none');
-                setTimeout(() => appLoader.remove(), 500);
-            }
+            hideAppLoader();
             console.error("Error fetching data:", error);
             DOM.listLoading.classList.remove('hidden');
             if (error.code === 'permission-denied') {
