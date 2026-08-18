@@ -473,6 +473,7 @@
             try {
                 const token = await getToken(messaging, {
                     serviceWorkerRegistration: registration
+                    vapidKey: "BEWdRMyyhfp2AMHcUoi9JQsupvSJUStQ9oYi9Awrv7CzWH5IW5VBOHuxlwcQf-Ai-EQCBQLl5sCbveEAyp2JjsA"
                 });
                 if (token) {
                     await setDoc(doc(db, "fcm_tokens", token), {
