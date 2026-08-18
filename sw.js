@@ -1,3 +1,33 @@
+importScripts('https://www.gstatic.com/firebasejs/11.6.1/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/11.6.1/firebase-messaging-compat.js');
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBocf8HfjKRYZEGDel9MQRxw0e5su5_Nsc",
+  authDomain: "jadwal-dzikir-najmushshaghir.firebaseapp.com",
+  projectId: "jadwal-dzikir-najmushshaghir",
+  storageBucket: "jadwal-dzikir-najmushshaghir.firebasestorage.app",
+  messagingSenderId: "694686087199",
+  appId: "1:694686087199:web:df3358d52dc024779c3d2a",
+  measurementId: "G-MHGZDS40SM"
+};
+
+firebase.initializeApp(firebaseConfig);
+const messaging = firebase.messaging();
+
+messaging.onBackgroundMessage((payload) => {
+  const notificationTitle = payload.notification?.title || 'Jadwal Dzikir Najmushshaghir 🕌';
+  const notificationOptions = {
+    body: payload.notification?.body || 'Ada pembaruan jadwal dzikir.',
+    icon: './favicon balai najmushshaghir terbaru.png',
+    badge: './favicon balai najmushshaghir terbaru.png',
+    vibrate: [200, 100, 200, 100, 200],
+    tag: payload.data?.tag || 'fcm-notification',
+    data: payload.data
+  };
+
+  self.registration.showNotification(notificationTitle, notificationOptions);
+});
+
 const CACHE_NAME = 'dzikir-najmushshaghir-v1';
 const ASSETS_TO_CACHE = [
   './',
@@ -93,22 +123,28 @@ self.addEventListener('message', (event) => {
       
       if (isNaN(eventTime)) return;
 
-      const reminderTime = eventTime - (2 * 60 * 60 * 1000);
-      const delay = reminderTime - now;
+      const reminderTimes = [
+        { time: eventTime - (2 * 60 * 60 * 1000), text: '2 jam' },
+        { time: eventTime - (1 * 60 * 60 * 1000), text: '1 jam' }
+      ];
 
-      if (delay > 0 && delay < 2147483647) {
-        const timerId = setTimeout(() => {
-          self.registration.showNotification("Pengingat Jadwal Meudike 🕌", {
-            body: `Acara di ${item.place} akan dimulai 2 jam lagi (${item.exactTime} WIB).`,
-            icon: './favicon balai najmushshaghir terbaru.png',
-            badge: './favicon balai najmushshaghir terbaru.png',
-            vibrate: [300, 100, 300],
-            tag: 'reminder-' + item.id
-          });
-        }, delay);
+      reminderTimes.forEach(reminder => {
+        const delay = reminder.time - now;
 
-        notificationTimers.push(timerId);
-      }
+        if (delay > 0 && delay < 2147483647) {
+          const timerId = setTimeout(() => {
+            self.registration.showNotification("Pengingat Jadwal Meudike 🕌", {
+              body: `Acara di ${item.place} akan dimulai ${reminder.text} lagi (${item.exactTime} WIB).`,
+              icon: './favicon balai najmushshaghir terbaru.png',
+              badge: './favicon balai najmushshaghir terbaru.png',
+              vibrate: [300, 100, 300],
+              tag: `reminder-${reminder.text.replace(' ', '')}-${item.id}`
+            });
+          }, delay);
+
+          notificationTimers.push(timerId);
+        }
+      });
     });
   }
 });
